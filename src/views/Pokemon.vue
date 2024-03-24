@@ -36,7 +36,7 @@ onMounted(() => {
     </template>
 
     <template v-else>
-      <section class="border rounded-lg bg-white grid grid-cols-2 items-center p-5 mb-5">
+      <section class="border rounded-lg bg-white grid grid-cols-1 lg:grid-cols-2 items-center p-5 mb-5">
         <div class="flex justify-center items-center">
           <img :src="pokemon.sprite" alt="" width="192" height="192" />
         </div>
@@ -52,7 +52,7 @@ onMounted(() => {
           <hr />
           <p v-if="pokemonDetails.height" class="my-1">Height: {{ pokemonDetails.height / 10 }} m</p>
 
-          <audio v-if="pokemonDetails.cries.latest" class="mt-3" controls>
+          <audio v-if="pokemonDetails.cries.latest" class="mt-3 mx-auto" controls>
             <source :src="pokemonDetails.cries.latest" type="audio/ogg" />
           </audio>
         </div>
