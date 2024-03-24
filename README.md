@@ -1,6 +1,6 @@
 # Pokemon Vue
 
-This template should help get you started developing with Vue 3 in Vite.
+A simple project to showcase Vue.js with Vue Router and Pinia.
 
 ## Recommended IDE Setup
 
