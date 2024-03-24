@@ -6,6 +6,7 @@ import PokemonLogo from "@/components/PokemonLogo.vue";
 import NoPokemonFound from "@/components/NoPokemonFound.vue";
 import Search from "@/components/Search.vue";
 import Pagination from "@/components/Pagination.vue";
+import GithubLink from "@/components/GithubLink.vue";
 
 const store = usePokemonStore();
 </script>
@@ -23,5 +24,7 @@ const store = usePokemonStore();
     <NoPokemonFound v-if="! store.isLoading && store.pokemonPaginatedList.length === 0" />
 
     <PokemonList />
+
+    <GithubLink />
   </main>
 </template>
