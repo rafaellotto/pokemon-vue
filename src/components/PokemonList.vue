@@ -5,8 +5,8 @@ const store = usePokemonStore();
 </script>
 
 <template>
-  <section class="grid grid-cols-2 gap-x-5 gap-y-5 sm:grid-cols-3 lg:grid-cols-6 xl:grid-cols-9">
-    <RouterLink :to="`/pokemon/${pokemon.id}`" v-for="pokemon in store.pokemonsFilteredList"  class="group">
+  <section class="grid grid-cols-2 sm:grid-cols-3 gap-x-5 gap-y-5 w-full max-w-screen-sm mx-auto">
+    <RouterLink :to="`/pokemon/${pokemon.id}`" v-for="pokemon in store.pokemonPaginatedList" :key="pokemon.id"  class="group">
       <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200">
         <img
             class="mx-auto group-hover:opacity-75"

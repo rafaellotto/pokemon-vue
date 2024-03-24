@@ -1,21 +1,35 @@
 import {defineStore} from "pinia";
-import {ref, watch} from "vue";
+import {computed, ref, watch} from "vue";
 import axios from "axios";
 
 export const usePokemonStore = defineStore('pokemon', () =>{
     const pokemonsList = ref([]);
-    const pokemonsFilteredList = ref([]);
     const isLoading = ref(true);
     const searchText = ref('');
-
-    watch(searchText, () => {
-        pokemonsFilteredList.value = ! searchText
-            ? pokemonsList.value
-            : pokemonsList.value.filter(item =>
-                item.id.toString() === searchText.value ||
-                item.name.includes(searchText.value.toLowerCase())
-            );
+    const page = ref(1);
+    const perPage = ref(12);
+    const lastPage = computed(() => {
+       return Math.ceil(pokemonsFilteredList.value.length / perPage.value);
     });
+
+    const pokemonsFilteredList = computed(() =>
+        pokemonsList.value
+            .filter(item => {
+                if (! searchText) {
+                    return true;
+                }
+
+                return item.id.toString() === searchText.value ||
+                    item.name.includes(searchText.value.toLowerCase())
+            })
+    );
+
+    const pokemonPaginatedList = computed(() =>
+        pokemonsFilteredList.value.slice(
+            (page.value - 1) * perPage.value,
+            page.value * perPage.value
+        )
+    );
 
     function findById(id) {
         return pokemonsList.value.find(pokemon => pokemon.id.toString() === id)
@@ -46,18 +60,38 @@ export const usePokemonStore = defineStore('pokemon', () =>{
                 pokemonsList.value = [];
             })
             .finally(() => {
-                pokemonsFilteredList.value = pokemonsList.value;
-
                 isLoading.value = false;
             });
     }
+
+    function previousPage() {
+        if (page.value - 1 < 1) {
+            return;
+        }
+
+        page.value -= 1;
+    }
+
+    function nextPage() {
+        if (page.value + 1 > lastPage.value) {
+            return;
+        }
+
+        page.value += 1;
+    }
+
+    watch(searchText, () => page.value = 1);
 
     return {
         findById,
         getPokemons,
         isLoading,
+        lastPage,
+        nextPage,
+        page,
         pokemonsList,
-        pokemonsFilteredList,
+        pokemonPaginatedList,
+        previousPage,
         searchText,
     };
 });

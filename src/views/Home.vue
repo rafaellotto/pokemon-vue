@@ -5,6 +5,7 @@ import PokemonList from "@/components/PokemonList.vue";
 import PokemonLogo from "@/components/PokemonLogo.vue";
 import NoPokemonFound from "@/components/NoPokemonFound.vue";
 import Search from "@/components/Search.vue";
+import Pagination from "@/components/Pagination.vue";
 
 const store = usePokemonStore();
 </script>
@@ -17,7 +18,9 @@ const store = usePokemonStore();
 
     <Search v-else />
 
-    <NoPokemonFound v-if="! store.isLoading && store.pokemonsFilteredList.length === 0" />
+    <Pagination />
+
+    <NoPokemonFound v-if="! store.isLoading && store.pokemonPaginatedList.length === 0" />
 
     <PokemonList />
   </main>
